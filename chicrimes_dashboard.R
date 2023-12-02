@@ -6,7 +6,6 @@ data3 <- incidents_per_crime
 
 Crime.Variables = data3[[1]]
 
-
 #----------------------------------------------
 # DASHBOARD LAYOUT
 #----------------------------------------------
@@ -64,7 +63,6 @@ ui <- dashboardPage(
   ),
   uiOutput("hidden_selector")
 )
-
 
 #----------------------------------------------
 # SERVER FUNCTIONS
@@ -206,23 +204,6 @@ server = function(input, output, session) {
       setView(-87.7, 41.837, zoom = 11) 
   }) 
   
-  #----------------------------------------------
-  # isotype of arrest rate per crime
-  #----------------------------------------------
-  # output$plot2 <- renderPlot({ 
-  #   df_local2 <- req(arrests_reactive()) 
-  #   ggplot(df_local2, aes(x, y, colour = color)) + 
-  #     geom_text(aes(label=label), family='fontawesome-webfont', size=10) + 
-  #     coord_equal() + 
-  #     theme_waffle() + 
-  #     labs(fill = NULL, 
-  #          colour = NULL) + 
-  #     theme(plot.title = element_text(size=15, face="bold"), 
-  #           legend.text=element_text(size=13)) + 
-  #     scale_color_manual(labels=c('Arrest', 'No Arrest'), values = c("brown4", "slategray3"), 
-  #                        guide = guide_legend(keyheight = unit(2.5, "lines"), keywidth = unit(2.5, "lines"))) 
-  # }) 
-  # 
   output$plot2 <- renderPlotly({ 
     count_time <- req(timeseries_reactive()) %>% 
       group_by(Date = lubridate::floor_date(date, "week")) %>%
@@ -244,7 +225,5 @@ server = function(input, output, session) {
         plot_bgcolor='#e5ecf6')
   })
 } 
-
-
 
 shinyApp(ui, server)
